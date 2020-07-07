@@ -1,0 +1,7 @@
+/build/
+/cmake-build-debug/
+/.vscode/
+log.txt
+imgui.ini
+/doc/
+/.idea/
