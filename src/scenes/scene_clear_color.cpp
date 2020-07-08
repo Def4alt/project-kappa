@@ -8,13 +8,6 @@ scene::SceneClearColor::SceneClearColor()
 
 }
 
-scene::SceneClearColor::~SceneClearColor() {
-
-}
-
-void scene::SceneClearColor::update(float delta_time) {
-}
-
 void scene::SceneClearColor::render() {
     GL_WRAP(glClearColor(color_[0], color_[1], color_[2], color_[3]))
     GL_WRAP(glClear(GL_COLOR_BUFFER_BIT))

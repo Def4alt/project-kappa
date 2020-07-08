@@ -7,9 +7,7 @@ namespace scene {
     class SceneClearColor: public Scene {
     public:
         SceneClearColor();
-        ~SceneClearColor();
 
-        void update(float delta_time) override;
         void render() override;
         void imgui_render() override;
 

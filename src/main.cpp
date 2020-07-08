@@ -1,3 +1,5 @@
+#define IMGUI_IMPL_OPENGL_LOADER_GLEW
+
 #include <SDL.h>
 #include <imgui/imgui.h>
 #include "logger.h"
@@ -5,13 +7,12 @@
 
 #undef main
 
-#define IMGUI_IMPL_OPENGL_LOADER_GLEW
-
 int main() {
     logger::start_log("log.txt");
 
     auto *game =
-            new Game("Demo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
+            new Game("Demo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                    1920, 1080, false);
 
     while (game->is_running) {
         game->handle_events();

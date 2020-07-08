@@ -56,6 +56,6 @@ template<>
 inline void VertexBufferLayout::push<unsigned char>(unsigned count) {
     elements_.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
     stride_ += VertexBufferElement::get_size_of_type(GL_UNSIGNED_BYTE) * count;
-};
+}
 
 #endif //PROJECT_KAPPA_VERTEX_BUFFER_LAYOUT_H

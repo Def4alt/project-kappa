@@ -36,7 +36,7 @@ add_executable(project_kappa
         vendor/imgui/imgui_impl_opengl3.cpp
         vendor/imgui/imgui_impl_sdl.cpp
         vendor/imgui/imgui_widgets.cpp
-        vendor/stb_image/stb_image.cpp)
+        vendor/stb_image/stb_image.cpp scenes/scene_texture_2d.cpp scenes/scene_texture_2d.h)
 
 include_directories(${SDL2_INCLUDE_DIR} "vendor" ".")
 target_link_libraries(project_kappa ${SDL2_LIBRARY} GLEW::GLEW OpenGL::GL)

@@ -6,6 +6,7 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_sdl.h>
 #include <imgui/imgui_impl_opengl3.h>
+#include <scenes/scene_texture_2d.h>
 #include "scenes/scene_clear_color.h"
 #include "renderer.h"
 
@@ -55,6 +56,7 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
     current_test_ = test_menu_;
 
     test_menu_->RegisterTest<scene::SceneClearColor>("Clear Color");
+    test_menu_->RegisterTest<scene::SceneTexture2D>("Texture 2D");
 
     is_running = true;
 
