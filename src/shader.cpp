@@ -82,7 +82,7 @@ unsigned Shader::compile_shader(unsigned int type, const std::string &source) co
     {
         int length;
         GL_WRAP(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length))
-        auto* const message = (char*)_malloca(length * sizeof(char));
+        auto* const message = (char*)malloc(length * sizeof(char));
         GL_WRAP(glGetShaderInfoLog(id, length, &length, message))
 
         logger::log(ERROR, message);

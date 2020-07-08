@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(GLEW_USE_STATIC_LIBS TRUE)
-add_definitions("-DGLEW_STATIC")
+set(GLEW_VERBOSE TRUE)
+if (WIN32)
+	set(GLEW_USE_STATIC_LIBS TRUE)
+	add_definitions("-DGLEW_STATIC")
+endif()
 
 list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/dependencies/GLEW")
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
