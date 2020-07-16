@@ -12,7 +12,7 @@ int main() {
 
     auto *game =
             new Game("Demo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                    1920, 1080, false);
+                    800, 600, false);
 
     while (game->is_running) {
         game->handle_events();
@@ -20,8 +20,8 @@ int main() {
         game->update(1000 / ImGui::GetIO().Framerate);
         game->render();
         game->imgui_render();
-
-        SDL_GL_SwapWindow(game->window);
+        
+        game->swap_window();
     }
 
     delete game;

@@ -1,32 +1,46 @@
+#include <memory>
+#include "vertex_array.h"
+#include "shader.h"
+#include "texture.h"
+#include "index_buffer.h"
+#include <glm/gtc/matrix_transform.hpp>
 #include "renderer.h"
 #include <imgui/imgui.h>
-#include "scene_texture_2d.h"
+#include "scene_batch_rendering.h"
 
-#include "glm/gtc/matrix_transform.hpp"
+scene::SceneBatchRendering::SceneBatchRendering() {
 
-scene::SceneTexture2D::SceneTexture2D() {
     float positions[] = {
             -50.0f, -50.0f, 0.0f, 0.0f,
             50.0f, -50.0f, 1.0f, 0.0f,
             50.0f, 50.0f, 1.0f, 1.0f,
-            -50.0f, 50.0f, 0.0f, 1.0f
+            -50.0f, 50.0f, 0.0f, 1.0f,
+
+            100.0f, 100.0f, 0.0f, 0.0f,
+            200.0f, 100.0f, 1.0f, 0.0f,
+            200.0f, 200.0f, 1.0f, 1.0f,
+            100.0f, 200.0f, 0.0f, 1.0f
     };
 
     unsigned indices[] = {
             0, 1, 2,
-            2, 3, 0
+            2, 3, 0,
+
+            4, 5, 6,
+            6, 7, 4
     };
 
     vao_ = std::make_unique<VertexArray>();
-    vertex_buffer_ = std::make_unique<VertexBuffer>(positions, 4 * 4 * sizeof(float));
+    vertex_buffer_ = std::make_unique<VertexBuffer>(positions, 2 * 4 * 4 * sizeof(float));
 
     VertexBufferLayout layout;
     layout.push<float>(2);
     layout.push<float>(2);
+    layout.push<float>(4);
 
     vao_->add_buffer(*vertex_buffer_, layout);
 
-    index_buffer_ = std::make_unique<IndexBuffer>(indices, 6);
+    index_buffer_ = std::make_unique<IndexBuffer>(indices, 12);
 
     shader_ = std::make_unique<Shader>("assets/shaders/basic.shader");
     shader_->bind();
@@ -40,11 +54,11 @@ scene::SceneTexture2D::SceneTexture2D() {
     proj_ = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
     view_ = translate(glm::mat4(1.0), glm::vec3(0, 0, 0));
 
-    translation_a_ = glm::vec3(200, 200, 0);
-    translation_b_ = glm::vec3(400, 400, 0);
+    translation_ = glm::vec3(200, 200, 0);
 }
 
-void scene::SceneTexture2D::render() {
+void scene::SceneBatchRendering::render() {
+
     GL_WRAP(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
     const Renderer renderer;
 
@@ -52,16 +66,7 @@ void scene::SceneTexture2D::render() {
     texture_->bind();
 
     {
-        const auto model = translate(glm::mat4(1.0), translation_a_);
-        const auto mvp = proj_ * view_ * model;
-        shader_->bind();
-        shader_->set_uniform_mat4f("u_MVP", mvp);
-
-        renderer.draw(*vao_, *index_buffer_, *shader_);
-    }
-
-    {
-        const auto model = translate(glm::mat4(1.0), translation_b_);
+        const auto model = translate(glm::mat4(1.0), translation_);
         const auto mvp = proj_ * view_ * model;
         shader_->bind();
         shader_->set_uniform_mat4f("u_MVP", mvp);
@@ -70,7 +75,6 @@ void scene::SceneTexture2D::render() {
     }
 }
 
-void scene::SceneTexture2D::imgui_render() {
-    ImGui::SliderFloat3("TranslationA", &translation_a_.x, 0.0f, 800.0f);
-    ImGui::SliderFloat3("TranslationB", &translation_b_.x, 0.0f, 800.0f);
+void scene::SceneBatchRendering::imgui_render() {
+    ImGui::SliderFloat3("Translation", &translation_.x, 0.0f, 800.0f);
 }

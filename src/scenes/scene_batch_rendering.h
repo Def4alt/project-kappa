@@ -1,18 +1,13 @@
-#ifndef PROJECT_KAPPA_SCENE_TEXTURE_2D_H
-#define PROJECT_KAPPA_SCENE_TEXTURE_2D_H
+#ifndef PROJECT_KAPPA_SCENE_BATCH_RENDERING_H
+#define PROJECT_KAPPA_SCENE_BATCH_RENDERING_H
 
-#include "vertex_array.h"
-#include <memory>
-#include "index_buffer.h"
-#include "shader.h"
-#include "texture.h"
-#include <glm/glm.hpp>
 #include "scene.h"
 
 namespace scene {
-    class SceneTexture2D: public Scene  {
+
+    class SceneBatchRendering: public Scene {
     public:
-        SceneTexture2D();
+        SceneBatchRendering();
 
         void render() override;
         void imgui_render() override;
@@ -24,10 +19,11 @@ namespace scene {
         std::unique_ptr<Texture> texture_;
         std::unique_ptr<VertexBuffer> vertex_buffer_;
 
-        glm::vec3 translation_a_, translation_b_;
+        glm::vec3 translation_;
         glm::mat4 proj_, view_;
     };
 }
 
 
-#endif //PROJECT_KAPPA_SCENE_TEXTURE_2D_H
+
+#endif //PROJECT_KAPPA_SCENE_BATCH_RENDERING_H

@@ -1,12 +1,12 @@
 #include <SDL.h>
 #include <GL/glew.h>
 #include "game.h"
-#include "logger.h"
 #include "error.h"
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_sdl.h>
 #include <imgui/imgui_impl_opengl3.h>
-#include <scenes/scene_texture_2d.h>
+#include "scenes/scene_texture_2d.h"
+#include "scenes/scene_batch_rendering.h"
 #include "scenes/scene_clear_color.h"
 #include "renderer.h"
 
@@ -20,9 +20,9 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
     if (fullscreen)
         flags = SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN;
 
-    window = SDL_CreateWindow(title, x, y, width, height, flags);
+    window_ = SDL_CreateWindow(title, x, y, width, height, flags);
 
-    if (!window) {
+    if (!window_) {
         logger::log(FATAL, "Failed to create window");
         return;
     }
@@ -31,7 +31,7 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-    context_ = SDL_GL_CreateContext(window);
+    context_ = SDL_GL_CreateContext(window_);
 
     if (glewInit() != GLEW_OK)
     {
@@ -43,7 +43,7 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
     ImGui::CreateContext();
     ImGui::StyleColorsDark();
 
-    ImGui_ImplSDL2_InitForOpenGL(window, context_);
+    ImGui_ImplSDL2_InitForOpenGL(window_, context_);
     ImGui_ImplOpenGL3_Init((char*)glGetString(GL_NUM_SHADING_LANGUAGE_VERSIONS));
 
     SDL_GL_SetSwapInterval(1);
@@ -57,6 +57,7 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
 
     test_menu_->RegisterTest<scene::SceneClearColor>("Clear Color");
     test_menu_->RegisterTest<scene::SceneTexture2D>("Texture 2D");
+    test_menu_->RegisterTest<scene::SceneBatchRendering>("Batch Rendering");
 
     is_running = true;
 
@@ -76,7 +77,7 @@ Game::~Game() {
     ImGui::DestroyContext();
 
     SDL_GL_DeleteContext(context_);
-    SDL_DestroyWindow(window);
+    SDL_DestroyWindow(window_);
 
     SDL_Quit();
 
@@ -126,7 +127,7 @@ void Game::render() {
 
 void Game::imgui_render() {
     ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame(window);
+    ImGui_ImplSDL2_NewFrame(window_);
     ImGui::NewFrame();
 
     if (current_test_) {
@@ -142,3 +143,6 @@ void Game::imgui_render() {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
+void Game::swap_window() {
+    SDL_GL_SwapWindow(window_);
+}

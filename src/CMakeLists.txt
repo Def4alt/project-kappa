@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 set(GLEW_VERBOSE TRUE)
+
 if (WIN32)
 	set(GLEW_USE_STATIC_LIBS TRUE)
 	add_definitions("-DGLEW_STATIC")
@@ -36,7 +37,9 @@ add_executable(project_kappa
         vendor/imgui/imgui_impl_opengl3.cpp
         vendor/imgui/imgui_impl_sdl.cpp
         vendor/imgui/imgui_widgets.cpp
-        vendor/stb_image/stb_image.cpp scenes/scene_texture_2d.cpp scenes/scene_texture_2d.h)
+        vendor/stb_image/stb_image.cpp 
+        scenes/scene_texture_2d.cpp scenes/scene_texture_2d.h 
+        scenes/scene_batch_rendering.cpp scenes/scene_batch_rendering.h)
 
 include_directories(${SDL2_INCLUDE_DIR} "vendor" ".")
 target_link_libraries(project_kappa ${SDL2_LIBRARY} GLEW::GLEW OpenGL::GL)

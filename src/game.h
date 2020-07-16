@@ -14,10 +14,10 @@ public:
     void update(float delta_time);
     void render();
     void imgui_render();
+    void swap_window();
 
     bool is_running;
 
-    SDL_Window* window;
 
 private:
     scene::Scene* current_test_;
@@ -25,6 +25,7 @@ private:
     bool keys_[322] = { false };
 
     SDL_GLContext context_;
+    SDL_Window* window_;
 };
 
 
