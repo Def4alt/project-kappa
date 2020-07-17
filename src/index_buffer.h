@@ -4,13 +4,14 @@
 
 class IndexBuffer {
 public:
-    IndexBuffer(const unsigned* data, unsigned count);
+    IndexBuffer(unsigned int capacity);
     ~IndexBuffer();
 
     void bind() const;
     void unbind() const;
 
-    inline unsigned get_count() const { return count_; }
+    unsigned get_count() const { return count_; }
+    void set_count(unsigned value) { count_ = value; }
 
 private:
     unsigned renderer_id_;

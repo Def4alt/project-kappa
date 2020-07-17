@@ -16,7 +16,7 @@ namespace scene {
         template<typename T>
         void RegisterTest(const std::string& name)
         {
-            logger::log(INFO, "Registering test " + name);
+            SPDLOG_INFO("Registering test {0}", name);
 
             tests_.push_back(std::make_pair(name, []() { return new T(); }));
         }

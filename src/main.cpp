@@ -8,7 +8,7 @@
 #undef main
 
 int main() {
-    logger::start_log("log.txt");
+    logger::Logger::init();
 
     auto *game =
             new Game("Demo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,

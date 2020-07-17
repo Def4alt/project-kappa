@@ -7,9 +7,11 @@ else()
 	add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(CMAKE_VERBOSE_MAKEFILE on)
 
+add_subdirectory("dependencies/spdlog")
 add_subdirectory("src")

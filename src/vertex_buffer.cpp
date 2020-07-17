@@ -2,20 +2,20 @@
 #include "vertex_buffer.h"
 #include "error.h"
 
-VertexBuffer::VertexBuffer(const void *data, unsigned int size) {
-    GL_WRAP(glGenBuffers(1, &renderer_id_))
-    GL_WRAP(glBindBuffer(GL_ARRAY_BUFFER, renderer_id_))
-    GL_WRAP(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW))
+VertexBuffer::VertexBuffer(unsigned int capacity, const void *data, const unsigned type) {
+    glGenBuffers(1, &renderer_id_);
+    glBindBuffer(GL_ARRAY_BUFFER, renderer_id_);
+    glBufferData(GL_ARRAY_BUFFER, capacity * sizeof(Vertex), data, type);
 }
 
 VertexBuffer::~VertexBuffer() {
-    GL_WRAP(glDeleteBuffers(1, &renderer_id_))
+    glDeleteBuffers(1, &renderer_id_);
 }
 
 void VertexBuffer::bind() const {
-    GL_WRAP(glBindBuffer(GL_ARRAY_BUFFER, renderer_id_))
+    glBindBuffer(GL_ARRAY_BUFFER, renderer_id_);
 }
 
 void VertexBuffer::unbind() const {
-    GL_WRAP(glBindBuffer(GL_ARRAY_BUFFER, 0))
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

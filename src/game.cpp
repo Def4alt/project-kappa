@@ -12,7 +12,7 @@
 
 Game::Game(const char *title, const int x, const int y, const int width, const int height, bool fullscreen) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        logger::log(FATAL, "SDL failed to initialize");
+        SPDLOG_CRITICAL("SDL failed to initialize");
         return;
     }
 
@@ -23,7 +23,7 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
     window_ = SDL_CreateWindow(title, x, y, width, height, flags);
 
     if (!window_) {
-        logger::log(FATAL, "Failed to create window");
+        SPDLOG_CRITICAL("Failed to create window");
         return;
     }
 
@@ -35,7 +35,7 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
 
     if (glewInit() != GLEW_OK)
     {
-        logger::log(FATAL, "Failed to init GLEW");
+        SPDLOG_CRITICAL("Failed to init GLEW");
         return;
     }
 
@@ -46,10 +46,10 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
     ImGui_ImplSDL2_InitForOpenGL(window_, context_);
     ImGui_ImplOpenGL3_Init((char*)glGetString(GL_NUM_SHADING_LANGUAGE_VERSIONS));
 
-    SDL_GL_SetSwapInterval(1);
+    // SDL_GL_SetSwapInterval(1);
 
-    GL_WRAP(glEnable(GL_BLEND));
-    GL_WRAP(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     current_test_ = nullptr;
     test_menu_ = new scene::SceneMenu(current_test_);
@@ -61,9 +61,9 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
 
     is_running = true;
 
-    logger::log(INFO, "Running");
+    SPDLOG_INFO("Running");
 
-    logger::log(INFO, reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+    SPDLOG_INFO(glGetString(GL_VERSION));
 }
 
 Game::~Game() {
@@ -81,7 +81,7 @@ Game::~Game() {
 
     SDL_Quit();
 
-    logger::log(INFO, "Cleaned");
+    SPDLOG_INFO("Cleaned");
 }
 
 void Game::handle_events() {
@@ -114,7 +114,7 @@ void Game::update(float delta_time) {
     if (current_test_)
         current_test_->update(delta_time);
 
-    logger::log(INFO, std::to_string(delta_time));
+    SPDLOG_INFO(delta_time);
 }
 
 void Game::render() {

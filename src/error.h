@@ -22,13 +22,14 @@
 
 #define ASSERT(x) if (!(x)) DEBUG_BREAK;
 
-#define GL_WRAP(x) error::clear_errors();\
-    x;\
-    ASSERT(error::log_errors(#x, __FILE__, __LINE__));
+#include "GL/glew.h"
 
 namespace error {
-    void clear_errors();
-    bool log_errors(const char* function, const char* file, int line);
+    void enable_gl_debugging();
+    void open_gl_log_message(
+        GLenum source, GLenum type, GLuint id, 
+        GLenum severity, GLsizei length, const GLchar *message, 
+        const void *userParam);
 }
 
 

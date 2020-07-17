@@ -16,21 +16,21 @@ Shader::Shader(const std::string &filepath)
 }
 
 Shader::~Shader() {
-    GL_WRAP(glDeleteProgram(renderer_id_))
+    glDeleteProgram(renderer_id_);
 }
 
 unsigned Shader::create_shader(const std::string &vertex_shader, const std::string &fragment_shader) const {
     const auto vs = compile_shader(GL_VERTEX_SHADER, vertex_shader);
     const auto fs = compile_shader(GL_FRAGMENT_SHADER, fragment_shader);
 
-    GL_WRAP(const auto program = glCreateProgram())
+    const auto program = glCreateProgram();
 
-    GL_WRAP(glAttachShader(program, vs))
-    GL_WRAP(glAttachShader(program, fs))
+    glAttachShader(program, vs);
+    glAttachShader(program, fs);
 
-    GL_WRAP(glLinkProgram(program))
-    GL_WRAP(glDeleteShader(vs))
-    GL_WRAP(glDeleteShader(fs))
+    glLinkProgram(program);
+    glDeleteShader(vs);
+    glDeleteShader(fs);
 
     return program;
 }
@@ -70,54 +70,54 @@ unsigned Shader::compile_shader(unsigned int type, const std::string &source) co
     const auto id = glCreateShader(type);
     const auto* src = source.c_str();
 
-    GL_WRAP(glShaderSource(id, 1, &src, nullptr))
+    glShaderSource(id, 1, &src, nullptr);
 
-    GL_WRAP(glCompileShader(id))
+    glCompileShader(id);
 
     int result;
 
-    GL_WRAP(glGetShaderiv(id, GL_COMPILE_STATUS, &result))
+    glGetShaderiv(id, GL_COMPILE_STATUS, &result);
 
     if (result == GL_FALSE)
     {
         int length;
-        GL_WRAP(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length))
+        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
         auto* const message = (char*)malloc(length * sizeof(char));
-        GL_WRAP(glGetShaderInfoLog(id, length, &length, message))
+        glGetShaderInfoLog(id, length, &length, message);
 
-        logger::log(ERROR, message);
+        SPDLOG_ERROR(message);
     }
 
     return id;
 }
 
 void Shader::bind() const {
-    GL_WRAP(glUseProgram(renderer_id_))
+    glUseProgram(renderer_id_);
 }
 
 void Shader::unbind() const {
-    GL_WRAP(glUseProgram(0))
+    glUseProgram(0);
 }
 
 void Shader::set_uniform_4f(const std::string &name, float v0, float v1, float v2, float v3) {
-    GL_WRAP(glUniform4f(get_uniform_location(name), v0, v1, v2, v3))
+    glUniform4f(get_uniform_location(name), v0, v1, v2, v3);
 }
 
 void Shader::set_uniform_1i(const std::string &name, int v0) {
-    GL_WRAP(glUniform1i(get_uniform_location(name), v0))
+    glUniform1i(get_uniform_location(name), v0);
 }
 
 void Shader::set_uniform_mat4f(const std::string &name, const glm::mat4 &v0) {
-    GL_WRAP(glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, &v0[0][0]))
+    glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, &v0[0][0]);
 }
 
 int Shader::get_uniform_location(const std::string &name) {
     if (uniform_location_cache_.find(name) != uniform_location_cache_.end())
         return uniform_location_cache_[name];
 
-    GL_WRAP(const auto location = glGetUniformLocation(renderer_id_, name.c_str()))
+    const auto location = glGetUniformLocation(renderer_id_, name.c_str());
     if (location == -1)
-        logger::log(WARNING, "uniform '" + name + "' doesn't exist");
+        SPDLOG_WARN("uniform '{0}' doesn't exist", name);
 
     uniform_location_cache_[name] = location;
 

@@ -5,28 +5,28 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 scene::SceneTexture2D::SceneTexture2D() {
-    float positions[] = {
-            -50.0f, -50.0f, 0.0f, 0.0f,
-            50.0f, -50.0f, 1.0f, 0.0f,
-            50.0f, 50.0f, 1.0f, 1.0f,
-            -50.0f, 50.0f, 0.0f, 1.0f
-    };
+    std::array<Vertex, 4> vertices;
 
-    unsigned indices[] = {
-            0, 1, 2,
-            2, 3, 0
-    };
+    Vertex* buffer = vertices.data();
+
+    glm::vec3 pos(-50.0f, -50.0f, 0.0f);
+    glm::vec4 color(0.4f, 0.5f, 0.5f, 1.0f);
+
+    buffer = Vertex::create_quad(buffer, pos, color, 0, 100.0f);
 
     vao_ = std::make_unique<VertexArray>();
-    vertex_buffer_ = std::make_unique<VertexBuffer>(positions, 4 * 4 * sizeof(float));
+    vertex_buffer_ = std::make_unique<VertexBuffer>(4, vertices.data(), GL_STATIC_DRAW);
 
     VertexBufferLayout layout;
+    layout.push<float>(3);
+    layout.push<float>(4);
     layout.push<float>(2);
-    layout.push<float>(2);
+    layout.push<float>(1);
 
     vao_->add_buffer(*vertex_buffer_, layout);
 
-    index_buffer_ = std::make_unique<IndexBuffer>(indices, 6);
+    index_buffer_ = std::make_unique<IndexBuffer>(6);
+    index_buffer_->set_count(6);
 
     shader_ = std::make_unique<Shader>("assets/shaders/basic.shader");
     shader_->bind();
@@ -45,7 +45,6 @@ scene::SceneTexture2D::SceneTexture2D() {
 }
 
 void scene::SceneTexture2D::render() {
-    GL_WRAP(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
     const Renderer renderer;
 
     renderer.clear();

@@ -7,10 +7,10 @@ if (WIN32)
 	add_definitions("-DGLEW_STATIC")
 endif()
 
+set(SDL2_DIR "${PROJECT_SOURCE_DIR}/dependencies/SDL2")
+
 list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/dependencies/GLEW")
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
-
-set(SDL2_DIR "${PROJECT_SOURCE_DIR}/dependencies/SDL2")
 
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
@@ -39,10 +39,11 @@ add_executable(project_kappa
         vendor/imgui/imgui_widgets.cpp
         vendor/stb_image/stb_image.cpp 
         scenes/scene_texture_2d.cpp scenes/scene_texture_2d.h 
-        scenes/scene_batch_rendering.cpp scenes/scene_batch_rendering.h)
+        scenes/scene_batch_rendering.cpp scenes/scene_batch_rendering.h
+        vertex.cpp vertex.h)
 
 include_directories(${SDL2_INCLUDE_DIR} "vendor" ".")
-target_link_libraries(project_kappa ${SDL2_LIBRARY} GLEW::GLEW OpenGL::GL)
+target_link_libraries(project_kappa ${SDL2_LIBRARY} GLEW::GLEW OpenGL::GL spdlog::spdlog)
 
 file(COPY "${PROJECT_SOURCE_DIR}/assets" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 

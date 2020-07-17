@@ -4,18 +4,28 @@
 #include <GL/glew.h>
 #include <sstream>
 
-void error::clear_errors() {
-    while(glGetError() != GL_NO_ERROR);
+void error::open_gl_log_message(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam)
+{
+    switch (severity)
+    {
+    case GL_DEBUG_SEVERITY_HIGH:
+        SPDLOG_ERROR("[OpenGL Debug HIGH] {0}", message);
+        break;
+    case GL_DEBUG_SEVERITY_MEDIUM:
+        SPDLOG_WARN("[OpenGL Debug MEDIUM] {0}", message);
+        break;
+    case GL_DEBUG_SEVERITY_LOW:
+        SPDLOG_INFO("[OpenGL Debug LOW] {0}", message);
+        break;
+    case GL_DEBUG_SEVERITY_NOTIFICATION:
+        SPDLOG_TRACE("[OpenGL Debug NOTIFICATION] {0}", message);
+        break;
+    }
 }
 
-bool error::log_errors(const char *function, const char *file, int line) {
-    while (const auto error = glGetError()){
-        std::stringstream ss;
-
-        ss << "**OPENGL**" << error << ": " << function << " " << file << ":" << line;
-        logger::log(ERROR, ss.str());
-        return false;
-    }
-
-    return true;
+void error::enable_gl_debugging()
+{
+    glDebugMessageCallback(open_gl_log_message, nullptr);
+    glEnable(GL_DEBUG_OUTPUT);
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 }
