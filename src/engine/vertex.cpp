@@ -1,6 +1,6 @@
 #include "vertex.h"
 
-Vertex* Vertex::create_quad(Vertex* target, glm::vec3 pos, glm::vec4 color, float tex_id, float size) {
+engine::Vertex* engine::Vertex::create_quad(engine::Vertex* target, glm::vec3 pos, glm::vec4 color, float tex_id, float size) {
     target->position = pos;
     target->color = color;
     target->tex_coords = glm::vec2(0.0f, 0.0f);

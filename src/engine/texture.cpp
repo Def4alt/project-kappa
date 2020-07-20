@@ -3,7 +3,7 @@
 #include "error.h"
 #include <stb_image/stb_image.h>
 
-Texture::Texture(const std::string &filepath)
+engine::Texture::Texture(const std::string &filepath)
     :renderer_id_(0), filepath_(filepath), local_buffer_(nullptr), width_(0), height_(0), bpp_(0) {
     stbi_set_flip_vertically_on_load(1);
     local_buffer_ = stbi_load(filepath.c_str(), &width_, &height_, &bpp_, 4);
@@ -24,15 +24,15 @@ Texture::Texture(const std::string &filepath)
         stbi_image_free(local_buffer_);
 }
 
-Texture::~Texture() {
+engine::Texture::~Texture() {
     glDeleteTextures(1, &renderer_id_);
 }
 
-void Texture::bind(unsigned int slot) const {
+void engine::Texture::bind(unsigned int slot) const {
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(GL_TEXTURE_2D, renderer_id_);
 }
 
-void Texture::unbind() const {
+void engine::Texture::unbind() const {
     glBindTexture(GL_TEXTURE_2D, 0);
 }

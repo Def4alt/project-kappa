@@ -1,10 +1,10 @@
-#include "error.h"
+#include "debug.h"
 #include "logger.h"
 
 #include <GL/glew.h>
 #include <sstream>
 
-void error::open_gl_log_message(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam)
+void engine::Debug::open_gl_log_message(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam)
 {
     switch (severity)
     {
@@ -23,7 +23,7 @@ void error::open_gl_log_message(GLenum source, GLenum type, GLuint id, GLenum se
     }
 }
 
-void error::enable_gl_debugging()
+void engine::Debug::enable_gl_debugging()
 {
     glDebugMessageCallback(open_gl_log_message, nullptr);
     glEnable(GL_DEBUG_OUTPUT);

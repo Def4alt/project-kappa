@@ -4,22 +4,22 @@
 #include <GL/glew.h>
 #include <sstream>
 
-struct Shader::ShadersSource {
+struct engine::Shader::ShadersSource {
     std::string vertex_shader;
     std::string fragment_shader;
 };
 
-Shader::Shader(const std::string &filepath)
+engine::Shader::Shader(const std::string &filepath)
     :renderer_id_(0), filepath_(filepath) {
     const auto shaders_source = from_glsl_file(filepath);
     renderer_id_ = create_shader(shaders_source.vertex_shader, shaders_source.fragment_shader);
 }
 
-Shader::~Shader() {
+engine::Shader::~Shader() {
     glDeleteProgram(renderer_id_);
 }
 
-unsigned Shader::create_shader(const std::string &vertex_shader, const std::string &fragment_shader) const {
+unsigned engine::Shader::create_shader(const std::string &vertex_shader, const std::string &fragment_shader) const {
     const auto vs = compile_shader(GL_VERTEX_SHADER, vertex_shader);
     const auto fs = compile_shader(GL_FRAGMENT_SHADER, fragment_shader);
 
@@ -35,7 +35,7 @@ unsigned Shader::create_shader(const std::string &vertex_shader, const std::stri
     return program;
 }
 
-Shader::ShadersSource Shader::from_glsl_file(const std::string &filepath) const {
+engine::Shader::ShadersSource engine::Shader::from_glsl_file(const std::string &filepath) const {
     std::ifstream stream(filepath);
 
     std::string line;
@@ -66,7 +66,7 @@ Shader::ShadersSource Shader::from_glsl_file(const std::string &filepath) const 
     return source;
 }
 
-unsigned Shader::compile_shader(unsigned int type, const std::string &source) const {
+unsigned engine::Shader::compile_shader(unsigned int type, const std::string &source) const {
     const auto id = glCreateShader(type);
     const auto* src = source.c_str();
 
@@ -91,27 +91,27 @@ unsigned Shader::compile_shader(unsigned int type, const std::string &source) co
     return id;
 }
 
-void Shader::bind() const {
+void engine::Shader::bind() const {
     glUseProgram(renderer_id_);
 }
 
-void Shader::unbind() const {
+void engine::Shader::unbind() const {
     glUseProgram(0);
 }
 
-void Shader::set_uniform_4f(const std::string &name, float v0, float v1, float v2, float v3) {
+void engine::Shader::set_uniform_4f(const std::string &name, float v0, float v1, float v2, float v3) {
     glUniform4f(get_uniform_location(name), v0, v1, v2, v3);
 }
 
-void Shader::set_uniform_1i(const std::string &name, int v0) {
+void engine::Shader::set_uniform_1i(const std::string &name, int v0) {
     glUniform1i(get_uniform_location(name), v0);
 }
 
-void Shader::set_uniform_mat4f(const std::string &name, const glm::mat4 &v0) {
+void engine::Shader::set_uniform_mat4f(const std::string &name, const glm::mat4 &v0) {
     glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, &v0[0][0]);
 }
 
-int Shader::get_uniform_location(const std::string &name) {
+int engine::Shader::get_uniform_location(const std::string &name) {
     if (uniform_location_cache_.find(name) != uniform_location_cache_.end())
         return uniform_location_cache_[name];
 

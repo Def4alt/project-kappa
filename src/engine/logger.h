@@ -5,7 +5,7 @@
 #include <fstream>
 #include <spdlog/spdlog.h>
 
-namespace logger
+namespace engine
 {
     class Logger
     {

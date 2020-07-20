@@ -3,21 +3,28 @@
 #include "scene_texture_2d.h"
 
 #include "glm/gtc/matrix_transform.hpp"
+#include "index_buffer.h"
+#include "shader.h"
+#include "texture.h"
+#include "vertex.h"
+#include "vertex_array.h"
+#include "vertex_buffer.h"
+#include "vertex_buffer_layout.h"
 
 scene::SceneTexture2D::SceneTexture2D() {
-    std::array<Vertex, 4> vertices;
+    std::array<engine::Vertex, 4> vertices;
 
-    Vertex* buffer = vertices.data();
+    engine::Vertex* buffer = vertices.data();
 
     glm::vec3 pos(-50.0f, -50.0f, 0.0f);
     glm::vec4 color(0.4f, 0.5f, 0.5f, 1.0f);
 
-    buffer = Vertex::create_quad(buffer, pos, color, 0, 100.0f);
+    buffer = engine::Vertex::create_quad(buffer, pos, color, 0, 100.0f);
 
-    vao_ = std::make_unique<VertexArray>();
-    vertex_buffer_ = std::make_unique<VertexBuffer>(4, vertices.data(), GL_STATIC_DRAW);
+    vao_ = std::make_unique<engine::VertexArray>();
+    vertex_buffer_ = std::make_unique<engine::VertexBuffer>(4, vertices.data(), GL_STATIC_DRAW);
 
-    VertexBufferLayout layout;
+    engine::VertexBufferLayout layout;
     layout.push<float>(3);
     layout.push<float>(4);
     layout.push<float>(2);
@@ -25,15 +32,15 @@ scene::SceneTexture2D::SceneTexture2D() {
 
     vao_->add_buffer(*vertex_buffer_, layout);
 
-    index_buffer_ = std::make_unique<IndexBuffer>(6);
+    index_buffer_ = std::make_unique<engine::IndexBuffer>(6);
     index_buffer_->set_count(6);
 
-    shader_ = std::make_unique<Shader>("assets/shaders/basic.shader");
+    shader_ = std::make_unique<engine::Shader>("assets/shaders/basic.shader");
     shader_->bind();
 
     shader_->set_uniform_4f("u_color", 0.3f, 0.4f, 0.5f, 1.0f);
 
-    texture_ = std::make_unique<Texture>("assets/textures/sprite.png");
+    texture_ = std::make_unique<engine::Texture>("assets/textures/sprite.png");
 
     shader_->set_uniform_1i("u_texture", 0);
 
@@ -45,7 +52,7 @@ scene::SceneTexture2D::SceneTexture2D() {
 }
 
 void scene::SceneTexture2D::render() {
-    const Renderer renderer;
+    const engine::Renderer renderer;
 
     renderer.clear();
     texture_->bind();

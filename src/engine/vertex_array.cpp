@@ -1,15 +1,16 @@
 #include "vertex_array.h"
 #include "vertex_buffer_layout.h"
+#include "vertex_buffer.h"
 
-VertexArray::VertexArray() {
+engine::VertexArray::VertexArray() {
     glGenVertexArrays(1, &renderer_id_);
 }
 
-VertexArray::~VertexArray() {
+engine::VertexArray::~VertexArray() {
     glDeleteVertexArrays(1, &renderer_id_);
 }
 
-void VertexArray::add_buffer(const VertexBuffer &vb, const VertexBufferLayout &layout) {
+void engine::VertexArray::add_buffer(const VertexBuffer &vb, const VertexBufferLayout &layout) {
     bind();
     vb.bind();
 
@@ -28,10 +29,10 @@ void VertexArray::add_buffer(const VertexBuffer &vb, const VertexBufferLayout &l
     }
 }
 
-void VertexArray::bind() const {
+void engine::VertexArray::bind() const {
     glBindVertexArray(renderer_id_);
 }
 
-void VertexArray::unbind() const {
+void engine::VertexArray::unbind() const {
     glBindVertexArray(0);
 }

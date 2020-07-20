@@ -1,11 +1,11 @@
-#include "error.h"
+#include "debug.h"
 #include "scene_clear_color.h"
 #include <GL/glew.h>
 #include <imgui/imgui.h>
 
 scene::SceneClearColor::SceneClearColor()
     :color_{0.2f, 0.3f, 0.4f, 1.0f}{
-    error::enable_gl_debugging();
+    engine::Debug::enable_gl_debugging();
 }
 
 void scene::SceneClearColor::render() {

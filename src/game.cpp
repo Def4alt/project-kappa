@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <GL/glew.h>
 #include "game.h"
-#include "error.h"
+#include "debug.h"
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_sdl.h>
 #include <imgui/imgui_impl_opengl3.h>
@@ -46,7 +46,7 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
     ImGui_ImplSDL2_InitForOpenGL(window_, context_);
     ImGui_ImplOpenGL3_Init((char*)glGetString(GL_NUM_SHADING_LANGUAGE_VERSIONS));
 
-    // SDL_GL_SetSwapInterval(1);
+    engine::Debug::enable_gl_debugging();
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -118,7 +118,7 @@ void Game::update(float delta_time) {
 }
 
 void Game::render() {
-    const Renderer renderer;
+    const engine::Renderer renderer;
     renderer.clear();
 
     if (current_test_)

@@ -8,20 +8,23 @@
 #include <imgui/imgui.h>
 #include "scene_batch_rendering.h"
 #include "logger.h"
-#include "error.h"
+#include "debug.h"
+#include "vertex.h"
+#include "vertex_buffer.h"
+#include "vertex_buffer_layout.h"
 
 scene::SceneBatchRendering::SceneBatchRendering() {
-    error::enable_gl_debugging();
+    engine::Debug::enable_gl_debugging();
 
     const unsigned max_quads = 50000;
     const unsigned max_vertices = max_quads * 4;
     const unsigned max_indices = max_quads * 6;
 
-    vao_ = std::make_unique<VertexArray>();
+    vao_ = std::make_unique<engine::VertexArray>();
 
-    vertex_buffer_ = std::make_unique<VertexBuffer>(max_vertices);
+    vertex_buffer_ = std::make_unique<engine::VertexBuffer>(max_vertices);
 
-    VertexBufferLayout layout;
+    engine::VertexBufferLayout layout;
 
     layout.push<float>(3);
     layout.push<float>(4);
@@ -30,12 +33,12 @@ scene::SceneBatchRendering::SceneBatchRendering() {
 
     vao_->add_buffer(*vertex_buffer_, layout);
 
-    index_buffer_ = std::make_unique<IndexBuffer>(max_indices);
+    index_buffer_ = std::make_unique<engine::IndexBuffer>(max_indices);
 
-    shader_ = std::make_unique<Shader>("assets/shaders/basic.shader");
+    shader_ = std::make_unique<engine::Shader>("assets/shaders/basic.shader");
     shader_->bind();
 
-    texture_ = std::make_unique<Texture>("assets/textures/sprite.png");
+    texture_ = std::make_unique<engine::Texture>("assets/textures/sprite.png");
 
     shader_->set_uniform_1i("u_texture", 0);
 
@@ -52,8 +55,8 @@ scene::SceneBatchRendering::SceneBatchRendering() {
 }
 
 void scene::SceneBatchRendering::render() {
-    std::array<Vertex, 50000> vertices;
-    Vertex* buffer = vertices.data();
+    std::array<engine::Vertex, 50000> vertices;
+    engine::Vertex* buffer = vertices.data();
 
     glm::vec4 color(0.3f, 0.4f, 0.5f, 1.0f);
 
@@ -63,16 +66,16 @@ void scene::SceneBatchRendering::render() {
         for (int y = 0; y < 11100; y += 100)
         {
             glm::vec3 pos(x, y, 0.0f);
-            buffer = Vertex::create_quad(buffer, pos, color, 0, 100.0f);
+            buffer = engine::Vertex::create_quad(buffer, pos, color, 0, 100.0f);
             indices_count += 6;
         }
     }
     index_buffer_->set_count(indices_count);
 
     vertex_buffer_->bind();
-    glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data());
+    glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(engine::Vertex), vertices.data());
 
-    const Renderer renderer;
+    const engine::Renderer renderer;
 
     renderer.clear();
     texture_->bind();

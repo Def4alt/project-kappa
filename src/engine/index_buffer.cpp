@@ -1,8 +1,8 @@
 #include "index_buffer.h"
-#include "error.h"
+#include "debug.h"
 #include <GL/glew.h>
 
-IndexBuffer::IndexBuffer(const unsigned int capacity)
+engine::IndexBuffer::IndexBuffer(const unsigned int capacity)
     : count_(0) {
     ASSERT(sizeof(unsigned) == sizeof(GLuint))
 
@@ -26,14 +26,14 @@ IndexBuffer::IndexBuffer(const unsigned int capacity)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
-IndexBuffer::~IndexBuffer() {
+engine::IndexBuffer::~IndexBuffer() {
     glDeleteBuffers(1, &renderer_id_);
 }
 
-void IndexBuffer::bind() const {
+void engine::IndexBuffer::bind() const {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer_id_);
 }
 
-void IndexBuffer::unbind() const {
+void engine::IndexBuffer::unbind() const {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

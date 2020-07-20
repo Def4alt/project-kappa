@@ -6,7 +6,7 @@
 
 #include "spdlog/sinks/basic_file_sink.h"
 
-namespace logger {
+namespace engine {
     std::shared_ptr<spdlog::logger> Logger::logger_;
 
     void Logger::init() {
