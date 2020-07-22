@@ -47,6 +47,7 @@ void scene::SceneBatchRendering::render() {
     const auto model = glm::translate(glm::mat4(1.0), translation_);
     const auto mvp = camera_controller_->get_camera().get_view_projection_matrix() * model;
     shader_->bind();
+    texture_->bind();
     shader_->set_uniform_mat4f("u_MVP", mvp);
 
     engine::BatchRenderer::begin_batch();
@@ -57,7 +58,7 @@ void scene::SceneBatchRendering::render() {
         {
             glm::vec3 pos(x, y, 0.0f);
             glm::vec4 color(0.3f, 0.4f, 0.5f, 1.0f);
-            engine::BatchRenderer::draw_quad(pos, glm::vec2(100.0f, 100.0f), color);
+            engine::BatchRenderer::draw_quad(pos, glm::vec2(100.0f, 100.0f), texture_->get_renderer_id());
         }
     }
 
@@ -71,6 +72,7 @@ void scene::SceneBatchRendering::imgui_render() {
     ImGui::SliderInt("Quad Count", &quad_count_, 1, 1000);
     ImGui::LabelText("Draw calls: ", "%d", engine::BatchRenderer::get_stats().draw_count);
     ImGui::LabelText("Quads: ", "%d", engine::BatchRenderer::get_stats().quad_count);
+    ImGui::LabelText("Zoom: ", "%f", camera_controller_->get_zoom());
 }
 
 void scene::SceneBatchRendering::update(float delta_time) {

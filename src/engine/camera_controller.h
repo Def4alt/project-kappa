@@ -24,7 +24,12 @@ namespace engine
         const Camera& get_camera() const { return camera_; }
 
         float get_zoom() { return zoom_; }
-        void set_zoom(float level) { zoom_ = level; }
+        void set_zoom(float level) { 
+            zoom_ = level;
+            camera_.set_projection_matrix(
+                -aspect_ratio_ * zoom_ * 1000, aspect_ratio_ * zoom_ * 1000, 
+                -zoom_ * 1000, zoom_ * 1000);
+        }
 
         float get_aspect_ratio() const { return aspect_ratio_; }
     };
