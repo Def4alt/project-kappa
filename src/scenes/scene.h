@@ -1,6 +1,8 @@
 #ifndef PROJECT_KAPPA_SCENE_H
 #define PROJECT_KAPPA_SCENE_H
 
+#include <SDL.h>
+
 namespace scene {
     class Scene {
     public:

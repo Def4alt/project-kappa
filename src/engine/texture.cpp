@@ -24,6 +24,21 @@ engine::Texture::Texture(const std::string &filepath)
         stbi_image_free(local_buffer_);
 }
 
+engine::Texture::Texture(const unsigned color)
+    :renderer_id_(0), local_buffer_(nullptr), width_(1), height_(1), bpp_(0) {
+    glGenTextures(1, &renderer_id_);
+    glBindTexture(GL_TEXTURE_2D, renderer_id_);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 engine::Texture::~Texture() {
     glDeleteTextures(1, &renderer_id_);
 }

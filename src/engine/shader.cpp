@@ -111,6 +111,10 @@ void engine::Shader::set_uniform_mat4f(const std::string &name, const glm::mat4 
     glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, &v0[0][0]);
 }
 
+void engine::Shader::set_uniform_1iv(const std::string &name, unsigned count, int *value) {
+    glUniform1iv(get_uniform_location(name), count, value);
+}
+
 int engine::Shader::get_uniform_location(const std::string &name) {
     if (uniform_location_cache_.find(name) != uniform_location_cache_.end())
         return uniform_location_cache_[name];

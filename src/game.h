@@ -22,7 +22,6 @@ public:
 private:
     scene::Scene* current_test_;
     scene::SceneMenu* test_menu_;
-    bool keys_[322] = { false };
 
     SDL_GLContext context_;
     SDL_Window* window_;

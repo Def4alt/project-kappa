@@ -1,5 +1,5 @@
-#ifndef PROJECT_KAPPA_SHADER_H
-#define PROJECT_KAPPA_SHADER_H
+#ifndef PROJECT_KAPPA_ENGINE_SHADER_H
+#define PROJECT_KAPPA_ENGINE_SHADER_H
 
 #include <string>
 #include <unordered_map>
@@ -19,6 +19,7 @@ namespace engine {
         void set_uniform_4f(const std::string& name, float v0, float v1, float v2, float v3);
         void set_uniform_1i(const std::string& name, int v0);
         void set_uniform_mat4f(const std::string& name, const glm::mat4& v0);
+        void set_uniform_1iv(const std::string& name, unsigned count, int *value);
 
     private:
         unsigned renderer_id_;
@@ -33,4 +34,4 @@ namespace engine {
 }
 
 
-#endif //PROJECT_KAPPA_SHADER_H
+#endif //PROJECT_KAPPA_ENGINE_SHADER_H

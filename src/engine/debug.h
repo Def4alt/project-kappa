@@ -1,5 +1,5 @@
-#ifndef PROJECT_KAPPA_DEBUG_H
-#define PROJECT_KAPPA_DEBUG_H
+#ifndef PROJECT_KAPPA_ENGINE_DEBUG_H
+#define PROJECT_KAPPA_ENGINE_DEBUG_H
 
 #if defined(_MSC_VER)
 
@@ -36,4 +36,4 @@ namespace engine {
 }
 
 
-#endif //PROJECT_KAPPA_DEBUG_H
+#endif //PROJECT_KAPPA_ENGINE_DEBUG_H

@@ -19,7 +19,7 @@ scene::SceneTexture2D::SceneTexture2D() {
     glm::vec3 pos(-50.0f, -50.0f, 0.0f);
     glm::vec4 color(0.4f, 0.5f, 0.5f, 1.0f);
 
-    buffer = engine::Vertex::create_quad(buffer, pos, color, 0, 100.0f);
+    buffer = engine::Vertex::create_quad(buffer, pos, color, 0, glm::vec2(100.0f, 100.0f));
 
     vao_ = std::make_unique<engine::VertexArray>();
     vertex_buffer_ = std::make_unique<engine::VertexBuffer>(4, vertices.data(), GL_STATIC_DRAW);
@@ -52,9 +52,7 @@ scene::SceneTexture2D::SceneTexture2D() {
 }
 
 void scene::SceneTexture2D::render() {
-    const engine::Renderer renderer;
-
-    renderer.clear();
+    engine::Renderer::clear();
     texture_->bind();
 
     {
@@ -63,7 +61,7 @@ void scene::SceneTexture2D::render() {
         shader_->bind();
         shader_->set_uniform_mat4f("u_MVP", mvp);
 
-        renderer.draw(*vao_, *index_buffer_, *shader_);
+        engine::Renderer::draw(*vao_, *index_buffer_);
     }
 
     {
@@ -72,7 +70,7 @@ void scene::SceneTexture2D::render() {
         shader_->bind();
         shader_->set_uniform_mat4f("u_MVP", mvp);
 
-        renderer.draw(*vao_, *index_buffer_, *shader_);
+        engine::Renderer::draw(*vao_, *index_buffer_);
     }
 }
 

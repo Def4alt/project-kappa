@@ -1,5 +1,5 @@
-#ifndef PROJECT_KAPPA_LOGGER_H
-#define PROJECT_KAPPA_LOGGER_H
+#ifndef PROJECT_KAPPA_ENGINE_LOGGER_H
+#define PROJECT_KAPPA_ENGINE_LOGGER_H
 
 #include <string>
 #include <fstream>
@@ -20,4 +20,4 @@ namespace engine
 
 }
 
-#endif //PROJECT_KAPPA_LOGGER_H
+#endif //PROJECT_KAPPA_ENGINE_LOGGER_H

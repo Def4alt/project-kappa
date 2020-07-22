@@ -9,6 +9,7 @@
 #include "scenes/scene_batch_rendering.h"
 #include "scenes/scene_clear_color.h"
 #include "renderer.h"
+#include "event.h"
 
 Game::Game(const char *title, const int x, const int y, const int width, const int height, bool fullscreen) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -86,40 +87,32 @@ Game::~Game() {
 
 void Game::handle_events() {
     SDL_Event event;
+    ImGui_ImplSDL2_ProcessEvent(&event);
 
     while (SDL_PollEvent(&event)) {
-        ImGui_ImplSDL2_ProcessEvent(&event);
-
         switch(event.type)
         {
             case SDL_QUIT:
                 is_running = false;
                 break;
-            case SDL_KEYDOWN:
-                keys_[event.key.keysym.sym] = true;
-                break;
-            case SDL_KEYUP:
-                keys_[event.key.keysym.sym] = false;
-                break;
             default:
                 break;
         }
-    }
 
-    if (keys_[SDLK_ESCAPE])
-        is_running = false;
+        engine::Event::process_events(&event);
+    }
 }
 
 void Game::update(float delta_time) {
     if (current_test_)
         current_test_->update(delta_time);
 
-    SPDLOG_INFO(delta_time);
+    if (engine::Event::is_pressed(SDLK_ESCAPE))
+        is_running = false;
 }
 
 void Game::render() {
-    const engine::Renderer renderer;
-    renderer.clear();
+    engine::Renderer::clear();
 
     if (current_test_)
         current_test_->render();

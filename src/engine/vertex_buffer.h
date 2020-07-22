@@ -1,5 +1,5 @@
-#ifndef PROJECT_KAPPA_VERTEX_BUFFER_H
-#define PROJECT_KAPPA_VERTEX_BUFFER_H
+#ifndef PROJECT_KAPPA_ENGINE_VERTEX_BUFFER_H
+#define PROJECT_KAPPA_ENGINE_VERTEX_BUFFER_H
 
 #include "vertex.h"
 #include <GL/glew.h>
@@ -18,4 +18,4 @@ namespace engine {
     };
 }
 
-#endif //PROJECT_KAPPA_VERTEX_BUFFER_H
+#endif //PROJECT_KAPPA_ENGINE_VERTEX_BUFFER_H

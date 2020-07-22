@@ -1,5 +1,5 @@
-#ifndef PROJECT_KAPPA_VERTEX_H
-#define PROJECT_KAPPA_VERTEX_H
+#ifndef PROJECT_KAPPA_ENGINE_VERTEX_H
+#define PROJECT_KAPPA_ENGINE_VERTEX_H
 
 #include "glm/glm.hpp"
 #include <array>
@@ -11,8 +11,8 @@ namespace engine {
         glm::vec2 tex_coords;
         float tex_id;
 
-        static Vertex* create_quad(Vertex* target, glm::vec3 pos, glm::vec4 color, float tex_id, float size);
+        static Vertex* create_quad(Vertex* target, glm::vec3 pos, glm::vec4 color, float tex_id, glm::vec2 size);
     };
 }
 
-#endif // PROJECT_KAPPA_VERTEX_H
+#endif // PROJECT_KAPPA_ENGINE_VERTEX_H
