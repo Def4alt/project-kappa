@@ -25,7 +25,7 @@ void engine::CameraController::update(float delta_time) {
         move.x += translation_speed_;
 
     if (glm::length(move) > 0)
-        camera_.set_position(pos + move * delta_time);
+        camera_.set_position(pos + move * zoom_ * delta_time);
 
     if (Event::is_pressed(SDLK_q))
         set_zoom(get_zoom() + 0.01f * delta_time);

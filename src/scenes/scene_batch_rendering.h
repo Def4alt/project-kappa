@@ -27,6 +27,7 @@ namespace scene {
         std::unique_ptr<engine::CameraController> camera_controller_;
 
         int quad_count_ = 10;
+        glm::vec2 size_;
         glm::vec3 translation_;
         glm::mat4 proj_, view_;
     };

@@ -38,6 +38,11 @@ namespace engine
     static BatchRendererData data_;
 
     void BatchRenderer::init() {
+        if (data_.quad_buffer != nullptr) {
+            SPDLOG_WARN("Tried to init batch renderer more than once");
+            return;
+        }
+
         data_.quad_buffer = new Vertex[MAX_VERTEX_COUNT];
 
         data_.vao = new VertexArray();

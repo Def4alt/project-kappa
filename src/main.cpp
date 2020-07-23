@@ -1,5 +1,3 @@
-#define IMGUI_IMPL_OPENGL_LOADER_GLEW
-
 #include <SDL.h>
 #include <imgui/imgui.h>
 #include "logger.h"
