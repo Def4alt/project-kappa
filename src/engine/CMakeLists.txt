@@ -1,16 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 
-set(GLEW_VERBOSE TRUE)
-
-if (WIN32)
-    set(GLEW_USE_STATIC_LIBS TRUE)
-endif()
-
 set(SDL2_DIR "${PROJECT_SOURCE_DIR}/dependencies/SDL2")
 
 find_package(SDL2 REQUIRED)
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
 
 add_library(project_kappa_engine STATIC
     logger.cpp logger.h
@@ -36,7 +28,7 @@ add_library(project_kappa_engine STATIC
     event.cpp event.h)
 
 target_include_directories(project_kappa_engine PUBLIC ${SDL2_INCLUDE_DIR} "vendor" ".")
-target_link_libraries(project_kappa_engine PUBLIC ${SDL2_LIBRARY} GLEW::GLEW OpenGL::GL spdlog::spdlog)
+target_link_libraries(project_kappa_engine PUBLIC ${SDL2_LIBRARY} spdlog::spdlog libglew_static)
 
 if(WIN32)
     target_compile_definitions(project_kappa_engine PUBLIC "-DGLEW_STATIC")
