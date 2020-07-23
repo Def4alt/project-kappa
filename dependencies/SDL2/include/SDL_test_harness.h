@@ -118,7 +118,7 @@ char *SDLTest_GenerateRunSeed(const int length);
  * \param filter Filter specification. NULL disables. Case sensitive.
  * \param testIterations Number of iterations to run each test case.
  *
- * \returns Test run result; 0 when all scenes passed, 1 if any scenes failed.
+ * \returns Test run result; 0 when all tests passed, 1 if any tests failed.
  */
 int SDLTest_RunSuites(SDLTest_TestSuiteReference *testSuites[], const char *userRunSeed, Uint64 userExecKey, const char *filter, int testIterations);
 

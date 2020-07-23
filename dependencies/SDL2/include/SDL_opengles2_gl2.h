@@ -38,7 +38,7 @@ typedef khronos_int32_t  GLfixed;
 typedef khronos_intptr_t GLintptr;
 typedef khronos_ssize_t  GLsizeiptr;
 
-/* OpenGL ES src versions */
+/* OpenGL ES core versions */
 #define GL_ES_VERSION_2_0                 1
 
 /* ClearBufferMask */
@@ -467,7 +467,7 @@ typedef khronos_ssize_t  GLsizeiptr;
 #define GL_INVALID_FRAMEBUFFER_OPERATION  0x0506
 
 /*-------------------------------------------------------------------------
- * GL src functions.
+ * GL core functions.
  *-----------------------------------------------------------------------*/
 
 GL_APICALL void         GL_APIENTRY glActiveTexture (GLenum texture);

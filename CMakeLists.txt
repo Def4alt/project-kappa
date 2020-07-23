@@ -13,8 +13,10 @@ set(GLEW_VERBOSE TRUE)
 
 set(glew-cmake_BUILD_SHARED OFF CACHE BOOL "Build the shared glew library" FORCE)
 set(ONLY_LIBS ON CACHE BOOL "Do not build executables" FORCE)
+set(SDL_SHARED OFF)
 
 add_subdirectory("dependencies/glew")
+add_subdirectory("dependencies/sdl2")
 add_subdirectory("dependencies/spdlog")
 add_subdirectory("src")
 

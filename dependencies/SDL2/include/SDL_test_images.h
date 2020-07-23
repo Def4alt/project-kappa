@@ -29,7 +29,7 @@
 
 /*
 
- Defines some images for scenes.
+ Defines some images for tests.
 
 */
 
