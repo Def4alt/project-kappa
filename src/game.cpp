@@ -17,7 +17,7 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
         return;
     }
 
-    unsigned flags = SDL_WINDOW_OPENGL;
+    uint32_t flags = SDL_WINDOW_OPENGL;
     if (fullscreen)
         flags = SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN;
 

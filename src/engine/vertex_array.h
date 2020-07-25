@@ -16,7 +16,7 @@ namespace engine {
         void unbind() const;
 
     private:
-        unsigned renderer_id_;
+        uint32_t renderer_id_;
     };
 }
 

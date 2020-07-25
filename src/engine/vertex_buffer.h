@@ -7,14 +7,14 @@
 namespace engine {
     class VertexBuffer {
     public:
-        VertexBuffer(unsigned int capacity, const void *data = nullptr, const unsigned type = GL_DYNAMIC_DRAW);
+        VertexBuffer(uint32_t capacity, const void *data = nullptr, const uint32_t type = GL_DYNAMIC_DRAW);
         ~VertexBuffer();
 
         void bind() const;
         void unbind() const;
 
     private:
-        unsigned renderer_id_;
+        uint32_t renderer_id_;
     };
 }
 

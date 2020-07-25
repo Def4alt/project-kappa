@@ -3,7 +3,7 @@
 #include "error.h"
 #include "vertex.h"
 
-engine::VertexBuffer::VertexBuffer(unsigned int capacity, const void *data, const unsigned type) {
+engine::VertexBuffer::VertexBuffer(uint32_t capacity, const void *data, const uint32_t type) {
     glGenBuffers(1, &renderer_id_);
     glBindBuffer(GL_ARRAY_BUFFER, renderer_id_);
     glBufferData(GL_ARRAY_BUFFER, capacity * sizeof(engine::Vertex), data, type);

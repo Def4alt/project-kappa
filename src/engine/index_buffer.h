@@ -1,22 +1,23 @@
 #ifndef PROJECT_KAPPA_ENGINE_INDEX_BUFFER_H
 #define PROJECT_KAPPA_ENGINE_INDEX_BUFFER_H
 
+#include <cstdint>
 
 namespace engine {
     class IndexBuffer {
     public:
-        IndexBuffer(unsigned int capacity);
+        IndexBuffer(uint32_t capacity);
         ~IndexBuffer();
 
         void bind() const;
         void unbind() const;
 
-        unsigned get_count() const { return count_; }
-        void set_count(unsigned value) { count_ = value; }
+        uint32_t get_count() const { return count_; }
+        void set_count(uint32_t value) { count_ = value; }
 
     private:
-        unsigned renderer_id_;
-        unsigned count_;
+        uint32_t renderer_id_;
+        uint32_t count_;
     };
 }
 

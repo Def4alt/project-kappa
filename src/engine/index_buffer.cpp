@@ -2,12 +2,12 @@
 #include "debug.h"
 #include <GL/glew.h>
 
-engine::IndexBuffer::IndexBuffer(const unsigned int capacity)
+engine::IndexBuffer::IndexBuffer(const uint32_t capacity)
     : count_(0) {
-    ASSERT(sizeof(unsigned) == sizeof(GLuint))
+    ASSERT(sizeof(uint32_t) == sizeof(GLuint))
 
-    unsigned indices[capacity];
-    unsigned offset = 0;
+    uint32_t indices[capacity];
+    uint32_t offset = 0;
     for (int i = 0; i < capacity; i += 6)
     {
         indices[i + 0] = 0 + offset;

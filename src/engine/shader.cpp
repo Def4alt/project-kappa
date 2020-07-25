@@ -19,7 +19,7 @@ engine::Shader::~Shader() {
     glDeleteProgram(renderer_id_);
 }
 
-unsigned engine::Shader::create_shader(const std::string &vertex_shader, const std::string &fragment_shader) const {
+uint32_t engine::Shader::create_shader(const std::string &vertex_shader, const std::string &fragment_shader) const {
     const auto vs = compile_shader(GL_VERTEX_SHADER, vertex_shader);
     const auto fs = compile_shader(GL_FRAGMENT_SHADER, fragment_shader);
 
@@ -41,7 +41,7 @@ engine::Shader::ShadersSource engine::Shader::from_glsl_file(const std::string &
     std::string line;
     std::stringstream ss[2];
 
-    unsigned int mode = 0;
+    uint32_t mode = 0;
 
     while (getline(stream, line)) {
         if (line.find("#shader") != std::string::npos) {
@@ -66,7 +66,7 @@ engine::Shader::ShadersSource engine::Shader::from_glsl_file(const std::string &
     return source;
 }
 
-unsigned engine::Shader::compile_shader(unsigned int type, const std::string &source) const {
+uint32_t engine::Shader::compile_shader(uint32_t type, const std::string &source) const {
     const auto id = glCreateShader(type);
     const auto* src = source.c_str();
 
@@ -111,7 +111,7 @@ void engine::Shader::set_uniform_mat4f(const std::string &name, const glm::mat4 
     glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, &v0[0][0]);
 }
 
-void engine::Shader::set_uniform_1iv(const std::string &name, unsigned count, int *value) {
+void engine::Shader::set_uniform_1iv(const std::string &name, uint32_t count, int *value) {
     glUniform1iv(get_uniform_location(name), count, value);
 }
 

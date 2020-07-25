@@ -18,8 +18,8 @@ namespace engine {
 
         struct BatchRendererStats
         {
-            unsigned draw_count = 0;
-            unsigned quad_count = 0;
+            uint32_t draw_count = 0;
+            uint32_t quad_count = 0;
         };
 
         static void reset_stats();

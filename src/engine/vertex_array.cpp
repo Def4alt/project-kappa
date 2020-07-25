@@ -15,9 +15,9 @@ void engine::VertexArray::add_buffer(const VertexBuffer &vb, const VertexBufferL
     vb.bind();
 
     const auto& elements = layout.get_elements();
-    unsigned offset = 0;
+    uint32_t offset = 0;
 
-    for (unsigned i = 0; i < elements.size(); i++)
+    for (uint32_t i = 0; i < elements.size(); i++)
     {
         const auto& element = elements[i];
 

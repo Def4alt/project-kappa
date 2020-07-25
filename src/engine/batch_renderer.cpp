@@ -13,10 +13,10 @@
 
 namespace engine
 {
-    const unsigned MAX_TEXTURES = 32;
-    const unsigned MAX_QUADS_COUNT = 1000;
-    const unsigned MAX_VERTEX_COUNT = MAX_QUADS_COUNT * 4;
-    const unsigned MAX_INDEX_COUNT = MAX_QUADS_COUNT * 6;
+    const uint32_t MAX_TEXTURES = 32;
+    const uint32_t MAX_QUADS_COUNT = 1000;
+    const uint32_t MAX_VERTEX_COUNT = MAX_QUADS_COUNT * 4;
+    const uint32_t MAX_INDEX_COUNT = MAX_QUADS_COUNT * 6;
 
     struct BatchRendererData {
         VertexArray *vao = nullptr;
@@ -24,13 +24,13 @@ namespace engine
         IndexBuffer *ib = nullptr;
 
         Texture *white_texture = nullptr;
-        unsigned white_texture_slot = 0;
+        uint32_t white_texture_slot = 0;
 
         Vertex *quad_buffer = nullptr;
         Vertex *quad_buffer_ptr = nullptr;
 
-        std::array<unsigned, MAX_TEXTURES> texture_slots;
-        unsigned texture_slot_index;
+        std::array<uint32_t, MAX_TEXTURES> texture_slots;
+        uint32_t texture_slot_index;
 
         BatchRenderer::BatchRendererStats stats;
     };
@@ -58,12 +58,12 @@ namespace engine
 
         data_.ib = new IndexBuffer(MAX_INDEX_COUNT);
 
-        unsigned color = 0xffffffff;
+        uint32_t color = 0xffffffff;
         data_.white_texture = new Texture(color);
         data_.white_texture->bind(0);
 
         data_.texture_slots[0] = data_.white_texture->get_renderer_id();
-        for (unsigned i = 1; i < MAX_TEXTURES; i++)
+        for (uint32_t i = 1; i < MAX_TEXTURES; i++)
             data_.texture_slots[i] = 0;
     }
 
@@ -87,7 +87,7 @@ namespace engine
     }
 
     void BatchRenderer::flush() {
-        for (unsigned i = 0; i < data_.texture_slot_index; i++)
+        for (uint32_t i = 0; i < data_.texture_slot_index; i++)
             glBindTextureUnit(i, data_.texture_slots[i]);
 
         Renderer::draw(*data_.vao, *data_.ib);
@@ -122,7 +122,7 @@ namespace engine
         glm::vec4 color(1.0f, 1.0f, 1.0f, 1.0f);
 
         float texture_index = 0.0f;
-        for (unsigned i = 1; i < data_.texture_slot_index; i++)
+        for (uint32_t i = 1; i < data_.texture_slot_index; i++)
         {
             if (data_.texture_slots[i] == texture_id)
             {

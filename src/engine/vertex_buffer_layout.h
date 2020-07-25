@@ -7,11 +7,11 @@
 
 namespace engine {
     struct VertexBufferElement {
-        unsigned type;
-        unsigned count;
+        uint32_t type;
+        uint32_t count;
         unsigned char normalized;
 
-        static unsigned get_size_of_type(unsigned type) {
+        static uint32_t get_size_of_type(uint32_t type) {
             switch (type) {
                 case GL_FLOAT: return 4;
                 case GL_UNSIGNED_INT: return 4;
@@ -28,32 +28,32 @@ namespace engine {
                 : stride_(0) {}
 
         template<typename T>
-        void push(unsigned count);
+        void push(uint32_t count);
 
-        inline unsigned get_stride() const { return stride_; }
+        inline uint32_t get_stride() const { return stride_; }
 
         inline std::vector<VertexBufferElement> get_elements() const { return elements_; }
 
     private:
         std::vector<VertexBufferElement> elements_;
-        unsigned stride_;
+        uint32_t stride_;
     };
 
     template<>
-    inline void VertexBufferLayout::push<float>(unsigned count) {
+    inline void VertexBufferLayout::push<float>(uint32_t count) {
         elements_.push_back({GL_FLOAT, count, GL_FALSE});
         stride_ += VertexBufferElement::get_size_of_type(GL_FLOAT) * count;
     }
 
     template<>
-    inline void VertexBufferLayout::push<unsigned>(unsigned count) {
+    inline void VertexBufferLayout::push<uint32_t>(uint32_t count) {
         elements_.push_back({GL_UNSIGNED_INT, count, GL_FALSE});
         stride_ += VertexBufferElement::get_size_of_type(GL_UNSIGNED_INT) * count;
 
     }
 
     template<>
-    inline void VertexBufferLayout::push<unsigned char>(unsigned count) {
+    inline void VertexBufferLayout::push<unsigned char>(uint32_t count) {
         elements_.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
         stride_ += VertexBufferElement::get_size_of_type(GL_UNSIGNED_BYTE) * count;
     }
