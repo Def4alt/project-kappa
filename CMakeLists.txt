@@ -23,3 +23,5 @@ else()
 endif()
 
 target_compile_features(project_kappa PRIVATE cxx_std_11 cxx_nonstatic_member_init cxx_auto_type cxx_nullptr)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)

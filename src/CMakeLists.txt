@@ -9,7 +9,8 @@ add_executable(project_kappa
     scenes/scene_batch_rendering.cpp scenes/scene_batch_rendering.h
     scenes/scene.h
     scenes/scene_menu.cpp scenes/scene_menu.h
-    scenes/scene_clear_color.cpp scenes/scene_clear_color.h)
+    scenes/scene_clear_color.cpp scenes/scene_clear_color.h
+    scenes/scene_astronomy.cpp scenes/scene_astronomy.h)
 
 target_link_libraries(project_kappa PRIVATE project_kappa_engine)
 

@@ -8,6 +8,7 @@
 int main() {
     engine::Logger::init();
 
+
     auto *game =
             new Game("Demo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                     800, 600, false);

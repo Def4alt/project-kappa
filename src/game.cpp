@@ -8,6 +8,7 @@
 #include "scenes/scene_texture_2d.h"
 #include "scenes/scene_batch_rendering.h"
 #include "scenes/scene_clear_color.h"
+#include "scenes/scene_astronomy.h"
 #include "renderer.h"
 #include "event.h"
 
@@ -58,7 +59,8 @@ Game::Game(const char *title, const int x, const int y, const int width, const i
 
     test_menu_->RegisterTest<scene::SceneClearColor>("Clear Color");
     test_menu_->RegisterTest<scene::SceneTexture2D>("Texture 2D");
-    test_menu_->RegisterTest<scene::SceneBatchRendering>("Batch Rendering");
+    test_menu_->RegisterTest<scene::SceneTexture2D>("Texture 2D");
+    test_menu_->RegisterTest<scene::SceneAstronomy>("Astronomy");
 
     is_running = true;
 
