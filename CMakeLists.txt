@@ -1,27 +1,75 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(project_kappa LANGUAGES CXX)
+# Set the project name to your project name, my project isn't very descriptive
+project(project_kappa CXX)
+include(cmake/StandardProjectSettings.cmake)
+include(cmake/PreventInSourceBuilds.cmake)
 
-set(CMAKE_VERBOSE_MAKEFILE on)
+# Link this 'library' to set the c++ standard / compile-time options requested
+add_library(project_options INTERFACE)
+target_compile_features(project_options INTERFACE cxx_std_17)
 
-set(glew-cmake_BUILD_SHARED OFF CACHE BOOL "Build the shared glew library" FORCE)
-set(ONLY_LIBS ON CACHE BOOL "Do not build executables" FORCE)
-set(SDL_SHARED OFF)
-set(BUILD_STATIC_LIBS TRUE)
-set(SPDLOG_BUILD_EXAMPLES FALSE)
-
-add_subdirectory("dependencies/glew")
-add_subdirectory("dependencies/sdl2")
-add_subdirectory("dependencies/spdlog")
-add_subdirectory("dependencies/glm")
-add_subdirectory("src")
-
-if (MSVC)
-	target_compile_options(project_kappa PRIVATE /W4)
-else()
-	target_compile_options(project_kappa PRIVATE -Wall -Wextra -Wpedantic)
+if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+  option(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
+  if(ENABLE_BUILD_WITH_TIME_TRACE)
+    add_compile_definitions(project_options INTERFACE -ftime-trace)
+  endif()
 endif()
 
-target_compile_features(project_kappa PRIVATE cxx_std_11 cxx_nonstatic_member_init cxx_auto_type cxx_nullptr)
+# Link this 'library' to use the warnings specified in CompilerWarnings.cmake
+add_library(project_warnings INTERFACE)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+# enable cache system
+include(cmake/Cache.cmake)
+
+# standard compiler warnings
+include(cmake/CompilerWarnings.cmake)
+set_project_warnings(project_warnings)
+
+# sanitizer options if supported by compiler
+include(cmake/Sanitizers.cmake)
+enable_sanitizers(project_options)
+
+# enable doxygen
+include(cmake/Doxygen.cmake)
+enable_doxygen()
+
+# allow for static analysis options
+include(cmake/StaticAnalyzers.cmake)
+
+option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
+option(ENABLE_TESTING "Enable Test Builds" ON)
+option(ENABLE_FUZZING "Enable Fuzzing Builds" OFF)
+
+# Very basic PCH example
+option(ENABLE_PCH "Enable Precompiled Headers" OFF)
+if(ENABLE_PCH)
+  # This sets a global PCH parameter, each project will build its own PCH, which is a good idea if any #define's change
+  #
+  # consider breaking this out per project as necessary
+  target_precompile_headers(
+    project_options
+    INTERFACE
+    <vector>
+    <string>
+    <map>
+    <utility>)
+endif()
+
+# Set up some extra Conan dependencies based on our needs before loading Conan
+set(CONAN_EXTRA_REQUIRES "")
+set(CONAN_EXTRA_OPTIONS "")
+
+set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES} sdl2/2.0.10@bincrafters/stable)
+
+include(cmake/Conan.cmake)
+run_conan()
+
+if(ENABLE_TESTING)
+  enable_testing()
+  message("Building Tests. Be sure to check out test/constexpr_tests for constexpr testing")
+  add_subdirectory(test)
+endif()
+
+add_subdirectory(src)
+

@@ -1,9 +1,2 @@
 build
-cmake-build-debug
 .vscode
-log.txt
-logs
-imgui.ini
-doc
-.idea
-.vs
