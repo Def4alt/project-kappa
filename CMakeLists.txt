@@ -60,7 +60,10 @@ endif()
 set(CONAN_EXTRA_REQUIRES "")
 set(CONAN_EXTRA_OPTIONS "")
 
-set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES} sdl2/2.0.10@bincrafters/stable)
+set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES} 
+  sdl2/2.0.10@bincrafters/stable
+  glew/2.1.0
+  glm/0.9.9.5)
 
 include(cmake/Conan.cmake)
 run_conan()
