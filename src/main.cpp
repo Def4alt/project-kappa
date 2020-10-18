@@ -1,8 +1,6 @@
 #include <spdlog/spdlog.h>
 #include <docopt/docopt.h>
 
-#include <SDL2/SDL.h>
-
 #include "Game.hpp"
 
 #include "scenes/ColorScene.hpp"

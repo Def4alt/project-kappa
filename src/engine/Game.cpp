@@ -5,6 +5,8 @@
 #include <imgui/imgui_impl_sdl.h>
 #include <imgui/imgui_impl_opengl3.h>
 #include <spdlog/spdlog.h>
+#include "Renderer.hpp"
+#include <stdint.h>
 
 namespace engine
 {
@@ -16,7 +18,7 @@ namespace engine
             abort();
         }
 
-        unsigned int flags = SDL_WINDOW_OPENGL;
+        uint32_t flags = SDL_WINDOW_OPENGL;
 
         if (params.fullscreen)
             flags = SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN;
@@ -91,8 +93,7 @@ namespace engine
 
     void Game::render()
     {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        Renderer::clear();
         
         if (current_test_)
             current_test_->render();

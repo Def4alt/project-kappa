@@ -27,21 +27,22 @@ namespace engine
 		void imgui_render();
 		auto swap_window() const { SDL_GL_SwapWindow(window_); }
 
-		[[nodiscard]] auto is_running() const noexcept
+		[[nodiscard]] constexpr auto is_running() const noexcept
 		{
 			return is_running_;
 		};
 
-        template <typename T>
-		auto register_scene(const std::string& title) const {
+		template <typename T>
+		auto register_scene(const std::string &title) const
+		{
 			test_menu_->register_scene<T>(title);
 		}
 
 	protected:
 		bool is_running_;
 
-		Scene* current_test_;
-		SceneMenu* test_menu_;
+		Scene *current_test_;
+		SceneMenu *test_menu_;
 
 		SDL_Window *window_;
 		SDL_GLContext context_;

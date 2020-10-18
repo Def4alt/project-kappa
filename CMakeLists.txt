@@ -61,9 +61,12 @@ set(CONAN_EXTRA_REQUIRES "")
 set(CONAN_EXTRA_OPTIONS "")
 
 set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES} 
-  sdl2/2.0.10@bincrafters/stable
+  sdl2/2.0.12@bincrafters/stable
   glew/2.1.0
   glm/0.9.9.5)
+
+set(CONAN_EXTRA_OPTIONS ${CONAN_EXTRA_OPTIONS}
+        sdl2:iconv=True)
 
 include(cmake/Conan.cmake)
 run_conan()

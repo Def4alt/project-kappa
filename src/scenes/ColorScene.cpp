@@ -1,6 +1,7 @@
 #include "ColorScene.hpp"
 #include <gl/glew.h>
 #include <imgui/imgui.h>
+#include "Renderer.hpp"
 
 namespace scene
 {
@@ -11,11 +12,11 @@ namespace scene
 
     void ColorScene::render()
     {
-        glClearColor(color_[0], color_[1], color_[2], color_[3]);
+        engine::Renderer::clear_color(color_);
     }
 
     void ColorScene::imgui_render()
     {
-        ImGui::ColorEdit4("Clear color", color_);
+        ImGui::ColorEdit4("Clear color", &color_.r);
     }
 } // namespace scene

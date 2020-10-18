@@ -2,6 +2,7 @@
 #define PROJECT_KAPPA_COLOR_SCENE_HPP
 
 #include "Scene.hpp"
+#include "Renderer.hpp"
 
 namespace scene
 {
@@ -14,7 +15,7 @@ namespace scene
         void imgui_render() override;
 
     protected:
-        float color_[4];
+        glm::vec4 color_;
     };
 
 } // namespace scene
